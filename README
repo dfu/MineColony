@@ -1,0 +1,16 @@
+MineColony
+License: GPLv2
+==============================================
+Forked from Version 0.41b
+http://www.minecraftforum.net/viewtopic.php?f=25&t=125803
+http://sites.google.com/site/minecolony/home
+===============================================
+
+MineColony for use with ModLoader Beta 1.2_02v4
+
+================================================
+Notes:
+
+The code changed for texture loading with ModLoader, and the old way of doing
+it is now deprecated. Thus the boxes don't have the nice textures until I
+fix it.
