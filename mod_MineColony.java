@@ -1,9 +1,8 @@
 package net.minecraft.src;
 
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
+import java.util.Properties;
+import java.io.IOException;
+import java.io.FileInputStream;
 import java.util.Map;
 
 public class mod_MineColony extends BaseMod {
@@ -29,14 +28,24 @@ public class mod_MineColony extends BaseMod {
 	public static int blockWarehouseID = 95;
 	public static int blockFarmerID = 96;
 
+	private static final Properties minecolProps = new Properties();
 
+/*
 	public static final Block hutLumberjack = (new BlockHutLumberjack(93,hutLumberjackID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutLumberjack");
 	public static final Block hutMiner = (new BlockHutMiner(94,hutMinerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutMiner");
 	public static final Block hutWarehouse = (new BlockHutWarehouse(95,hutWarehouseID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutWarehouse");
 	public static final Block hutFarmer = (new BlockHutFarmer(96,hutFarmerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutFarmer");
 	public static Item scepterGold = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterGoldID).setFull3D().setItemName("scepterGold");
 	public static Item scepterSteel = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterSteelID).setFull3D().setItemName("scepterSteel");
+*/
 
+	public static Block hutLumberjack;
+	public static Block hutMiner;
+	public static Block hutWarehouse;
+	public static Block hutFarmer;
+
+	public static final Item scepterGold = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterGoldID).setFull3D().setItemName("scepterGold");
+	public static final Item scepterSteel = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterSteelID).setFull3D().setItemName("scepterSteel");
 
 	public void AddRecipes(CraftingManager recipes) {
 		//Defaults
@@ -102,8 +111,26 @@ public class mod_MineColony extends BaseMod {
 
 
 	public mod_MineColony() {
-		//Removed until testing finishes
 
+		try {
+			FileInputStream f = new FileInputStream("minecolony.properties");
+			minecolProps.load(f);
+			blockLumberjackID = Integer.parseInt(minecolProps.getProperty("LumberjackBlockID"));
+			blockMinerID = Integer.parseInt(minecolProps.getProperty("MinerBlockID"));
+			blockFarmerID = Integer.parseInt(minecolProps.getProperty("FarmerBlockID"));
+			blockWarehouseID = Integer.parseInt(minecolProps.getProperty("WarehouseBlockID"));
+			f.close();
+		}
+		catch (IOException e) {
+			ModLoader.getLogger().warning("Minecolony could not open the properties file: Using defaults\n");
+		}
+
+		hutLumberjack = (new BlockHutLumberjack(blockLumberjackID,hutLumberjackID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutLumberjack");
+		hutMiner = (new BlockHutMiner(blockMinerID,hutMinerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutMiner");
+		hutWarehouse = (new BlockHutWarehouse(blockWarehouseID,hutWarehouseID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutWarehouse");
+		hutFarmer = (new BlockHutFarmer(blockFarmerID,hutFarmerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutFarmer");
+
+		// These return int overrides for something
 		ModLoader.addOverride("/gui/items.png", "/gui/Item_scepterGold.png");
 		ModLoader.addOverride("/gui/items.png", "/gui/Item_scepterSteel.png");
 		ModLoader.addOverride("/terrain.png", "/Block_hutLumberjack.png");
@@ -113,7 +140,7 @@ public class mod_MineColony extends BaseMod {
 
 
 		ModLoader.RegisterBlock(hutLumberjack);
-        ModLoader.RegisterBlock(hutMiner);
+		ModLoader.RegisterBlock(hutMiner);
 		ModLoader.RegisterBlock(hutWarehouse);
 		ModLoader.RegisterBlock(hutFarmer);
 		ModLoader.RegisterEntityID(EntityLumberjack.class, "Lumberjack", ModLoader.getUniqueEntityId());
@@ -126,6 +153,9 @@ public class mod_MineColony extends BaseMod {
 		ModLoader.AddName(mod_MineColony.hutMiner, "Miner's chest");
 		ModLoader.AddName(mod_MineColony.hutWarehouse, "Delivery man's chest");
 		ModLoader.AddName(mod_MineColony.hutFarmer, "Farmer's chest");
+
+
+
 	}
 
 	public void AddRenderer(Map map) {
