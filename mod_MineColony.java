@@ -7,45 +7,20 @@ import java.util.Map;
 
 public class mod_MineColony extends BaseMod {
 
-	// Needs Updated 
-	/*
-	public static int hutLumberjackID = ModLoader.getUniqueSpriteIndex("/terrain.png");
-	public static int hutMinerID = ModLoader.getUniqueSpriteIndex("/terrain.png");
-	public static int hutWarehouseID = ModLoader.getUniqueSpriteIndex("/terrain.png");
-	public static int hutFarmerID = ModLoader.getUniqueSpriteIndex("/terrain.png");
-	public static int scepterGoldID = ModLoader.getUniqueSpriteIndex("/gui/items.png");
-	public static int scepterSteelID = ModLoader.getUniqueSpriteIndex("/gui/items.png");
-	*/
-	public static int hutLumberjackID = 1;
-	public static int hutMinerID = 2;
-	public static int hutWarehouseID = 3;
-	public static int hutFarmerID = 4;
-	public static int scepterGoldID = 5;
-	public static int scepterSteelID = 6;
-
 	public static int blockLumberjackID = 93;
 	public static int blockMinerID = 94;
 	public static int blockWarehouseID = 95;
 	public static int blockFarmerID = 96;
-
 	private static final Properties minecolProps = new Properties();
-
-/*
-	public static final Block hutLumberjack = (new BlockHutLumberjack(93,hutLumberjackID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutLumberjack");
-	public static final Block hutMiner = (new BlockHutMiner(94,hutMinerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutMiner");
-	public static final Block hutWarehouse = (new BlockHutWarehouse(95,hutWarehouseID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutWarehouse");
-	public static final Block hutFarmer = (new BlockHutFarmer(96,hutFarmerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutFarmer");
-	public static Item scepterGold = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterGoldID).setFull3D().setItemName("scepterGold");
-	public static Item scepterSteel = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterSteelID).setFull3D().setItemName("scepterSteel");
-*/
 
 	public static Block hutLumberjack;
 	public static Block hutMiner;
 	public static Block hutWarehouse;
 	public static Block hutFarmer;
+	public static Item scepterGold;
+	public static Item scepterSteel;
 
-	public static final Item scepterGold = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterGoldID).setFull3D().setItemName("scepterGold");
-	public static final Item scepterSteel = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(scepterSteelID).setFull3D().setItemName("scepterSteel");
+
 
 	public void AddRecipes(CraftingManager recipes) {
 		//Defaults
@@ -111,7 +86,6 @@ public class mod_MineColony extends BaseMod {
 
 
 	public mod_MineColony() {
-
 		try {
 			FileInputStream f = new FileInputStream("minecolony.properties");
 			minecolProps.load(f);
@@ -125,18 +99,22 @@ public class mod_MineColony extends BaseMod {
 			ModLoader.getLogger().warning("Minecolony could not open the properties file: Using defaults\n");
 		}
 
-		hutLumberjack = (new BlockHutLumberjack(blockLumberjackID,hutLumberjackID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutLumberjack");
-		hutMiner = (new BlockHutMiner(blockMinerID,hutMinerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutMiner");
-		hutWarehouse = (new BlockHutWarehouse(blockWarehouseID,hutWarehouseID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutWarehouse");
-		hutFarmer = (new BlockHutFarmer(blockFarmerID,hutFarmerID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutFarmer");
+		int overrideID;
+
+		overrideID = ModLoader.addOverride("/terrain.png", "/Block_hutLumberjack.png");
+		hutLumberjack = (new BlockHutLumberjack(blockLumberjackID,overrideID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutLumberjack");
+		overrideID = ModLoader.addOverride("/terrain.png", "/Block_hutMiner.png");
+		hutMiner = (new BlockHutMiner(blockMinerID,overrideID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutMiner");
+		overrideID = ModLoader.addOverride("/terrain.png", "/Block_hutWarehouse.png");
+		hutWarehouse = (new BlockHutWarehouse(blockWarehouseID,overrideID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutWarehouse");
+		overrideID = ModLoader.addOverride("/terrain.png", "/Block_hutFarmer.png");
+		hutFarmer = (new BlockHutFarmer(blockFarmerID,overrideID)).setHardness(2.5F).setStepSound(Block.soundWoodFootstep).setBlockName("hutFarmer");
+		overrideID = ModLoader.addOverride("/gui/items.png", "/gui/Item_scepterGold.png");
+		scepterGold = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(overrideID).setFull3D().setItemName("scepterGold");
+		overrideID = ModLoader.addOverride("/gui/items.png", "/gui/Item_scepterSteel.png");
+		scepterSteel = (new ItemScepter(ModLoader.getUniqueEntityId())).setIconIndex(overrideID).setFull3D().setItemName("scepterSteel");
 
 		// These return int overrides for something
-		ModLoader.addOverride("/gui/items.png", "/gui/Item_scepterGold.png");
-		ModLoader.addOverride("/gui/items.png", "/gui/Item_scepterSteel.png");
-		ModLoader.addOverride("/terrain.png", "/Block_hutLumberjack.png");
-		ModLoader.addOverride("/terrain.png", "/Block_hutMiner.png");
-		ModLoader.addOverride("/terrain.png", "/Block_hutWarehouse.png");
-		ModLoader.addOverride("/terrain.png", "/Block_hutFarmer.png");
 
 
 		ModLoader.RegisterBlock(hutLumberjack);
