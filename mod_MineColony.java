@@ -1,7 +1,9 @@
 package net.minecraft.src;
 
+import net.minecraft.client.Minecraft;
 import java.util.Properties;
 import java.io.IOException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Map;
 
@@ -87,7 +89,8 @@ public class mod_MineColony extends BaseMod {
 
 	public mod_MineColony() {
 		try {
-			FileInputStream f = new FileInputStream("minecolony.properties");
+			String mc_path = (new StringBuilder()).append(Minecraft.getMinecraftDir().getCanonicalPath()).append("/MineColony.properties").toString();
+			FileInputStream f = new FileInputStream(mc_path);
 			minecolProps.load(f);
 			blockLumberjackID = Integer.parseInt(minecolProps.getProperty("LumberjackBlockID"));
 			blockMinerID = Integer.parseInt(minecolProps.getProperty("MinerBlockID"));
@@ -96,7 +99,8 @@ public class mod_MineColony extends BaseMod {
 			f.close();
 		}
 		catch (IOException e) {
-			ModLoader.getLogger().warning("Minecolony could not open the properties file: Using defaults\n");
+			ModLoader.getLogger().warning("[MineColony] could not open conf file.");
+			ModLoader.getLogger().warning("[MineColony] using default Block IDs\n");
 		}
 
 		int overrideID;
