@@ -580,7 +580,7 @@ public class EntityMiner extends EntityWorker {
 				}
 			}
 			
-			if(miningTunnel!=null)
+			if(miningTunnel!=null && miningTunnelIndex < miningTunnel.size())
 			{
 				Vec3D tempMinePoint = miningTunnel.get(miningTunnelIndex);
 				int minX = (int)Math.round(tempMinePoint.xCoord);
