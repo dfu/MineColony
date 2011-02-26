@@ -62,6 +62,10 @@ public class EntityWorker extends EntityCreature {
 	protected boolean isSwinging = false;
 	protected float speed = 0;
 
+	// For Humans+ Compatibility
+	public boolean goodMob = true;
+	public boolean peacefulMob = false;
+
 	public void setHomePosition(double x, double y, double z) {
 		homePosX = MathHelper.floor_double(x);
 		homePosY = MathHelper.floor_double(y);
