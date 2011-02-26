@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class mod_MineColony extends BaseMod {
 
-	public static int blockLumberjackID = 93;
-	public static int blockMinerID = 94;
-	public static int blockWarehouseID = 95;
-	public static int blockFarmerID = 96;
+	public static int blockLumberjackID = 95;
+	public static int blockMinerID = 96;
+	public static int blockWarehouseID = 97;
+	public static int blockFarmerID = 98;
 	private static final Properties minecolProps = new Properties();
 
 	public static Block hutLumberjack;
